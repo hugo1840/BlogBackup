@@ -32,8 +32,6 @@ new Vue({
 # 定义加载动画和消息
 在`client/src`目录下新建请求文件`http.js`，定义加载动画和方法：
 ```javascript
-vim client/src/http.js
-
 import axios from 'axios';
 import { Message, Loading } from 'element-ui';
 
