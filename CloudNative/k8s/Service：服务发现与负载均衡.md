@@ -68,11 +68,11 @@ spec:
     app: web
   ports:
     - name: http
-	  protocol: TCP
+      protocol: TCP
       port: 80
       targetPort: 80
-	- name: https
-	  protocol: TCP
+    - name: https
+      protocol: TCP
       port: 443
       targetPort: 443
 ```
@@ -95,8 +95,8 @@ spec:
   type: ClusterIP
   ports:
     - port: 80
-	  protocol: TCP
-	  targetPort: 80
+      protocol: TCP
+      targetPort: 80
   selector:
     app: web
 ```
@@ -112,8 +112,8 @@ spec:
   ports:
   - port: 80
     protocol: TCP
-	targetPort: 80
-	nodePort: 30009
+    targetPort: 80
+    nodePort: 30009
   selector:
     app: web
 ```
