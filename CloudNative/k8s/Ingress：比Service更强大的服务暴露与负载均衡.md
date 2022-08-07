@@ -88,14 +88,14 @@ spec:
   rules:
   - host: web.myingressplayroom.com  #指定域名
     http:
-	  paths:
-	  - path: /               #转发路径
-	    pathType: Prefix
-		backend:
-		  service:
-		    name: nginx-web   #指定Service名称
-			port:
-			  number: 80      #指定Service端口
+      paths:
+      - path: /               #转发路径
+	pathType: Prefix
+        backend:
+          service:
+	    name: nginx-web   #指定Service名称
+	    port:
+	      number: 80      #指定Service端口
 ```
 
 Ingress控制器基于域名做分流；创建Ingress规则时如果不指定域名，集群中只会有一个Ingress规则生效。
