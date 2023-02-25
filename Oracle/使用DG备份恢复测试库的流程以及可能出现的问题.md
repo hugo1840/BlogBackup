@@ -15,6 +15,7 @@ modified: '2023-02-25T14:27:38.248Z'
 du -sh /oradata/TRADE/datafile
 df -Th
 ```
+RMAN压缩备份的压缩比大约是4:1。
 
 # 从DG备库备份全库和归档日志
 查看备库当前SCN：
