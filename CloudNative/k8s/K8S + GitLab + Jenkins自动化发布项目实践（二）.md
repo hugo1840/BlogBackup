@@ -62,7 +62,7 @@ spec:
     - ReadWriteMany     
   nfs:
     path: /ifs/kubernetes/jenkins
-	server: 192.168.124.d
+  server: 192.168.124.d
 ```
 
 创建PV资源：
