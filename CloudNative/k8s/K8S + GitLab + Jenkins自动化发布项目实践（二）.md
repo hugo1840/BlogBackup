@@ -150,12 +150,14 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: jenkins
+  namespace: default
 
 ---
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: jenkins
+  namespace: default
 rules:
 - apiGroups: [""]
   resources: ["pods","events"]
@@ -182,6 +184,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: jenkins
+  namespace: default
 ```
 
 部署Jenkins容器：
@@ -362,16 +365,16 @@ ERRO[0000] server "192.168.124.f" does not seem to support HTTPS  error="failed 
 [root@k8s-master1 jenkins]# vi /etc/containerd/config.toml
 ...
       [plugins."io.containerd.grpc.v1.cri".registry.configs]
-        [plugins."io.containerd.grpc.v1.cri".registry.configs."harbor.harborgit".tls]
+        [plugins."io.containerd.grpc.v1.cri".registry.configs."192.168.124.f".tls]
           insecure_skip_verify = true     # 跳过TLS认证
-        [plugins."io.containerd.grpc.v1.cri".registry.configs."harbor.harborgit".auth]
+        [plugins."io.containerd.grpc.v1.cri".registry.configs."192.168.124.f".auth]
           username = "admin"      # 配置Harbor登陆用户和密码
           password = "XXXXXX"
 
       [plugins."io.containerd.grpc.v1.cri".registry.headers]
 
       [plugins."io.containerd.grpc.v1.cri".registry.mirrors]
-        [plugins."io.containerd.grpc.v1.cri".registry.mirrors."harbor.haborgit"]
+        [plugins."io.containerd.grpc.v1.cri".registry.mirrors."192.168.124.f"]
           endpoint = ["http://192.168.124.f"]     # 配置Harbor访问地址
 ...
 
