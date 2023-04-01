@@ -425,18 +425,6 @@ spec:
 
 可以通过`kubectl get pods`命令检查k8s集群中是否会自动创建和销毁jenkins-slave Pod。
 
-如果Console Output中收到以下报错，不一定是服务账号权限的原因。
-```bash
-Failure executing: 
-POST at: https://kubernetes.default/api/v1/namespaces/default/pods. 
-Message: Unauthorized! Configured service account doesn't have access. 
-Service account may have been revoked. Unauthorized.
-```
-具体原因我们下次进一步排查。
-
-
-
-
 
 
 
