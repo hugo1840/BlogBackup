@@ -47,6 +47,12 @@ SQL> select * from dba_hist_wr_control;
 ```
 可以看到，AWR默认保留的时间为8天。
 
+修改为快照保留七天，每30分钟产生一个快照：
+```sql
+exec dbms_workload_repository.modify_snapshot_settings(
+     retention => 7*24*60, interval => 30);
+```
+
 可是为什么还会占用这么多空间？AWR报告默认是采取**DELETE**的方式进行过期信息删除的，相比TRUNCATE而言，会产生大量的碎片（对于开启了自动扩展数据文件的表空间而言，碎片的现会象更加严重）。另一方面，ASH的信息有可能不受AWR快照保留策略的控制。
 
 检查占用SYSAUX表空间前十的对象：
