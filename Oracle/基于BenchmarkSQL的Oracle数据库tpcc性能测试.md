@@ -17,10 +17,10 @@ modified: '2023-04-15T11:21:55.759Z'
 | ojdbc8.jar | Oracle JDBC驱动 |
 
 >:lion:**下载地址**
-><br/>- BenchmarkSQL: https://github.com/petergeoghegan/benchmarksql
-><br/>- htop: https://github.com/htop-dev/htop/releases
-><br/>- R: https://mirror.bjtu.edu.cn/cran/src/base/R-3/R-3.6.3.tar.gz
-><br/>- ojdbc8: https://www.oracle.com/database/technologies/maven-central-guide.html
+>- BenchmarkSQL: https://github.com/petergeoghegan/benchmarksql
+>- htop: https://github.com/htop-dev/htop/releases
+>- R: https://mirror.bjtu.edu.cn/cran/src/base/R-3/R-3.6.3.tar.gz
+>- ojdbc8: https://www.oracle.com/database/technologies/maven-central-guide.html
 
 
 ## 安装软件依赖
