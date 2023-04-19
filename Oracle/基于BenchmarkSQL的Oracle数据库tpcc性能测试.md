@@ -127,7 +127,7 @@ runTxnsPerTerminal=10   //每个客户端运行的事务数量。该参数不为
 //To run for specified minutes- runTxnsPerTerminal must equal zero
 runMins=0               //测试的时长，单位为分钟。该参数不为0时，runTxnsPerTerminal必须为0
 //Number of total transactions per minute
-limitTxnsPerMin=300     //每分钟运行的事务数量
+limitTxnsPerMin=300     //用于限制每分钟提交事务数量，设置为0表示不限制。如果设置太小，压力会不够
 
 //Set to true to run in 4.x compatible mode. Set to false to use the
 //entire configured database evenly.
@@ -155,7 +155,8 @@ osCollectorDevices=net_eth0 blk_vdb
 其中几个重要参数建议按如下规则配置：
 - **warehouses**：每个仓库初始大小约100M。建议测试数据量为数据库服务器物理内存的**2到5倍**大小；
 - **loadWorkers**：建议配置为CPU核数；
-- **terminals**：建议配置为CPU核数的**2到6倍**大小。
+- **terminals**：建议配置为CPU核数的**2到6倍**大小；
+- **limitTxnsPerMin**：在固定时长测试时，如果最终测试结果中每分钟事务提交数量很接近该参数的配置，可以调大该参数后重新测试（或将其设置为0）。
 
 `benchmarksql-5.0/run/sql.common`路径下是BenchmarkSQL用于创建测试数据的SQL脚本，可以按需调整。
 ```bash
