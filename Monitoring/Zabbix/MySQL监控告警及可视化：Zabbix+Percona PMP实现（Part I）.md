@@ -226,7 +226,7 @@ systemctl enable zabbix_agentd
 
 启动zabbix系统服务时的常见错误以及解决办法如下：
 
-1. **找不到libmysqlcliient模块**
+1. **找不到libmysqlclient模块**
 
 报错信息：
 ```bash
