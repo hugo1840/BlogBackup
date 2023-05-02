@@ -107,7 +107,7 @@ systemctl stop mysqld
 systemctl start mysqld
 ```
 
-稍等片刻后应该能够在Zabbix Web首页看到MySQL服务宕机的告警信息，同时配置的告警接收邮件也会受到告警发生和恢复的消息。
+稍等片刻后应该能够在Zabbix Web首页看到MySQL服务宕机的告警信息，同时配置的告警接收邮箱也会收到告警发生和恢复的消息。
 
 ![img21](https://img-blog.csdnimg.cn/489942a0c6664f86b0c5aefea187a0b9.png#pic_center)
 ![img22](https://img-blog.csdnimg.cn/24259a49656347eea7b9c3162660c3ba.jpeg#pic_center)
