@@ -108,13 +108,13 @@ ORA-12154: TNS:could not resolve the connect identifier specified
 NAMES.DIRECTORY_PATH= (TNSNAMES, EZCONNECT)  # 这里没问题
 ```
 
-重新创建DBLINK，修改dblink名称与`TNSNAMES.ORA`里一致，并去掉DESCRIPTION前面的连接名:
+重新创建DBLINK，去掉DESCRIPTION前面的连接名:
 ```sql
 [oracle@localdb ~]$ sqlplus dbtuser1/Password11 
 
 SQL> drop database link testlink1;
 
-SQL> create database link REMOTEDB 
+SQL> create database link testlink1 
   connect to dbtuser3 identified by "Password33" 
   using ' 
   (DESCRIPTION = 
@@ -126,15 +126,15 @@ SQL> create database link REMOTEDB
 
 再次检查DBLINK是否可用：
 ```sql
-SQL> select * from DBTUSER3.REPORT@REMOTEDB;
+SQL> select * from DBTUSER3.REPORT@TESTLINK1;
 
 no rows selected
 
-SQL> insert into DBTUSER3.REPORT@REMOTEDB (stuid,sname) values (4,'GTA V');
+SQL> insert into DBTUSER3.REPORT@TESTLINK1 (stuid,sname) values (4,'GTA V');
 
 1 row created.
 
-SQL> select * from DBTUSER3.REPORT@REMOTEDB;
+SQL> select * from DBTUSER3.REPORT@TESTLINK1;
 
  STUID SNAME
  4 GTA V
@@ -154,7 +154,7 @@ SQL> select * from DBTUSER3.REPORT;
 
 过了几分钟后，再次查看本地库，又突然可以查到了！！！
 ```sql
-SQL> select * from DBTUSER3.REPORT@REMOTEDB;
+SQL> select * from DBTUSER3.REPORT@TESTLINK1;
 
  STUID SNAME
  4 GTA V
@@ -180,34 +180,46 @@ SQL> select * from report;
 
 # 授予私有DBLINK访问权限给其他用户
 
-在本地库使用用户`dbtuser1`为私有DBLINK创建测试视图和同义词，并将视图的查看权限授予用户`dbtuser2`。
+在本地库使用用户`dbtuser1`为私有DBLINK创建测试视图和同义词：
 ```sql
 [oracle@localdb ~]$ sqlplus dbtuser1/Password11
 
 SQL> create view v_testvc1 as 
-select sname from DBTUSER3.REPORT@REMOTEDB where stuid < 4;
+select sname from DBTUSER3.REPORT@TESTLINK1 where stuid < 4;
 
 SQL> create view v_testvc2 as 
-select * from DBTUSER3.REPORT@REMOTEDB;
+select * from DBTUSER3.REPORT@TESTLINK1;
 
-SQL> create synonym report_table for DBTUSER3.REPORT@REMOTEDB;
+SQL> create synonym report_table for DBTUSER3.REPORT@TESTLINK1;
+```
 
+将视图和同义词的查看权限授予用户`dbtuser2`：
+```sql
 SQL> grant select on v_testvc1 to dbtuser2;
 SQL> grant select on v_testvc2 to dbtuser2;
+
+SQL> grant select on report_table to dbtuser2;
+grant select on report_table to dbtuser2
+                *
+ERROR at line 1:
+ORA-02021: DDL operations are not allowed on a remote database
+--> 不能将私有DBLINK的同义词的查看权限授予其他用户
 ```
 
 切换用户`dbtuser2`测试：
 ```sql
 [oracle@localdb ~]$ sqlplus dbtuser2/Password22
 
-SQL> select * from DBTUSER3.REPORT@REMOTEDB; 
-select * from DBTUSER3.REPORT@REMOTEDB * 
+SQL> select * from DBTUSER3.REPORT@TESTLINK1; 
+select * from DBTUSER3.REPORT@TESTLINK1 
+                              * 
 ERROR at line 1:
 ORA-02019: connection description for remote database not found
 --> 直接访问DBLINK失败
 
 SQL> select * from dbtuser1.report_table; 
-select * from dbtuser1.report_table * 
+select * from dbtuser1.report_table 
+                       * 
 ERROR at line 1: 
 ORA-02019: connection description for remote database not found
 --> 访问同义词失败
@@ -230,9 +242,5 @@ SQL> select * from dbtuser1.v_testvc2;
 ``` 
 
 即：可以通过创建视图来将私有DBLINK访问权限授予其他用户，但是不能通过直接为私有DBLINK创建同义词来让其他用户使用。
-
-
-
-
 
 
