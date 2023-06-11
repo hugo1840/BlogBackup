@@ -122,24 +122,29 @@ log_archive_format                   string      arch_%t_%s_%r.log
 
 
 # 修改快速恢复区
-修改快速恢复区（Fast Recovery Area）位置的前提条件是已开启归档模式。
-
-查看快速恢复区位置：
+查看快速恢复区（Fast Recovery Area）：
 ```sql
+-- 查看快速恢复区位置和大小
 SQL> show parameter db_recovery_file_dest;
 
 NAME                                 TYPE        VALUE
 ------------------------------------ ----------- ------------------------------
 db_recovery_file_dest                string      +DATADG
 db_recovery_file_dest_size           big integer 12732M
+
+-- 查看快速恢复区使用情况
+SQL> select * from v$flash_recovery_area_usage;
+SQL> select * from v$recovery_file_dest;
 ```
 
-修改快速恢复区位置（确保目标路径已创建并赋予oracle用户rwx权限）：
+修改快速恢复区大小和位置（确保目标路径已创建并赋予oracle用户rwx权限）：
 ```sql
+SQL> alter system set db_recovery_file_dest_size=20G;
 SQL> alter system set db_recovery_file_dest='/u01/app/flash_recovery_area';
 
 System altered.
 
+--开启闪回区（需要开启归档模式）
 SQL> alter database flashback on;
 
 Database altered.
@@ -149,8 +154,9 @@ SQL> show parameter db_recovery_file_dest;
 NAME                                 TYPE        VALUE
 ------------------------------------ ----------- ------------------------------
 db_recovery_file_dest                string      /u01/app/flash_recovery_area
-db_recovery_file_dest_size           big integer 12732M
+db_recovery_file_dest_size           big integer 20G
 ```
+快速恢复区需要设置得足够大，能够放得下控制文件、数据文件的副本、以及联机重做日志和闪回日志，并且最好与Oracle数据文件目录位于不同的磁盘位置。
 
 
 **References**
