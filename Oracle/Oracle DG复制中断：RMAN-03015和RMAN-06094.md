@@ -14,14 +14,16 @@ Oracle DG复制中断：RMAN-03015和RMAN-06094
 # 背景与错误信息
 通过RMAN DUPLICATE搭建DG备库，一段时间后收到RMAN-03015和RMAN-06094:
 ```bash
-rman auxiliary /
-RMAN> 
-run {
+rman target sys/oracle@${ORACLE_SID}_0 auxiliary sys/oracle@${ORACLE_SID}_1
+RMAN> run {
+allocate channel c1 device type disk;
+allocate channel c2 device type disk;
 allocate auxiliary channel aux1 device type disk;
 allocate auxiliary channel aux2 device type disk;
-duplicate database orcldb for standby
-    nofilenamecheck
-    backup location '/oradata/backup/';
+duplicate target database for standby
+    from active database
+    dorecover
+    nofilenamecheck;
 }
 
 ...
