@@ -111,8 +111,6 @@ exec dbms_stats.lock_schema_stats(ownname => 'XX_SCHEMA_NAME');
 
 
 **References**
-
 [1] https://docs.oracle.com/en/database/oracle/oracle-database/19/arpls/DBMS_STATS.html#GUID-3B3AE30F-1A34-4BFE-A326-15048F7E904F
-
 [2] http://blog.itpub.net/17203031/viewspace-1067620/
 
