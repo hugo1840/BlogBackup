@@ -25,8 +25,8 @@ where STATTYPE_LOCKED is null and STALE_STATS='YES';
 ```sql
 BEGIN
   dbms_stats.gather_schema_stats(ownname => 'XXX',      --用户Schema名称
-		estimate_percent => 60,                 --取样率（不能超过100）
-		method_opt	 => 'FOR ALL COLUMNS SIZE AUTO',
+		estimate_percent => 60,                         --取样率（不能超过100）
+		method_opt	     => 'FOR ALL COLUMNS SIZE AUTO',
 		degree 	         => 32,                         --并行度（对于只能串行的某些内部SQL不生效）
 		cascade	         => true,                       --收集表统计信息的同时也收集索引统计信息
 		options          => 'GATHER AUTO',              --自动收集必要的统计信息
@@ -58,13 +58,13 @@ END;
 ```sql
 BEGIN
   dbms_stats.gather_table_stats(ownname	 => 'XXX',
-                 tabname              => 'XXX_TABLE_NAME',             --表名
-		 partname             => 'P11',                        --分区名（可以省略）
-		 estimate_percent     => 60,
+         tabname          => 'XXX_TABLE_NAME',             --表名
+		 partname         => 'P11',                        --分区名（可以省略）
+		 estimate_percent => 60,
 		 method_opt	      => 'FOR ALL COLUMNS SIZE REPEAT',
 		 degree 	      => 32,
 		 cascade	      => true,
-		 no_invalidate 	      => FALSE);
+		 no_invalidate 	  => FALSE);
 END;
 /
 ```
@@ -81,9 +81,9 @@ exec dbms_stats.gather_table_stats('XX_SCHEMA_NAME','XX_TABLE_NAME',cascade=>tru
 ```sql
 BEGIN
   dbms_stats.set_table_stats(ownname => 'XXX',
-           tabname  => 'XXX_TABLE_NAME',          --表名
+       tabname  => 'XXX_TABLE_NAME',          --表名
 	   partname => 'P11',                     --分区名（可以省略）
-           numrows  => 10000,                     --手动指定表或分区中行数的统计信息
+       numrows  => 10000,                     --手动指定表或分区中行数的统计信息
 	   no_invalidate => FALSE);
 END;
 /
