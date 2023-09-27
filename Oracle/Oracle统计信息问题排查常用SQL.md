@@ -115,9 +115,13 @@ SELECT dbms_stats.get_prefs(pname => 'STALE_PERCENT',ownname => 'xxx',tabname =>
 
 修改自动统计信息收集触发的阈值为5%：
 ```sql
---修改全库级别的参数值
+--修改全局级别的参数值
 EXEC dbms_stats.set_global_prefs(pname => 'STALE_PERCENT',pvalue => 5);
-EXEC dbms_stats.set_database_prefs(pname => 'STALE_PERCENT',pvalue => 5);  --不包括Oracle内置表
+--set_global_prefs对所有表生效，对新建的表也生效
+
+--修改全库级别的参数值
+EXEC dbms_stats.set_database_prefs(pname => 'STALE_PERCENT',pvalue => 5);  
+--set_database_prefs默认不影响Oracle内置表，对新建的表不生效
 
 --修改指定用户表的参数值
 EXEC dbms_stats.set_table_prefs(ownname => 'xxx',tabname => 'xxx',pname => 'STALE_PERCENT',pvalue => 5);
@@ -126,6 +130,8 @@ EXEC dbms_stats.set_table_prefs(ownname => 'xxx',tabname => 'xxx',pname => 'STAL
 
 **References**
 [1] https://docs.oracle.com/en/database/oracle/oracle-database/19/arpls/DBMS_STATS.html#GUID-2C00FE80-1553-404C-85B6-220895561FE8
+[2] https://www.modb.pro/db/543228
+
 
 
 
