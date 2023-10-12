@@ -176,7 +176,7 @@ sekiro=> grant select on staff to ishin;
 GRANT
 ```
 
-**References **
+**References**
 【1】https://www.postgresqltutorial.com/postgresql-administration/postgresql-schema/
 
 
