@@ -7,6 +7,8 @@ modified: '2023-10-29T02:07:36.521Z'
 
 PG物理备份与恢复之pg_basebackup
 
+>:elephant: 数据库版本：PostgreSQL 10.4
+
 # 开启WAL日志归档
 通过数据库的全量备份和WAL日志，可以将数据库恢复到任意时间点。每个WAL日志文件大小通常是16MB。WAL日志文件个数增长到`wal_keep_segments + 1`个后，会覆盖已有的WAL日志文件。因此最好根据业务需求定时对WAL日志进行归档。
 
